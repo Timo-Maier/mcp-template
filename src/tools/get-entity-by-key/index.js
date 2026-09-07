@@ -12,6 +12,10 @@ module.exports = {
     inputSchema: {
       type: 'object',
       properties: {
+        service: {
+          type: 'string',
+          description: 'Service name to query. Use discover_services to list available services.',
+        },
         entity: {
           type: 'string',
           description: 'Entity set name (e.g. A_SalesOrder).',
@@ -30,7 +34,7 @@ module.exports = {
           description: 'Comma-separated list of properties to return.',
         },
       },
-      required: ['entity', 'key'],
+      required: ['service', 'entity', 'key'],
     },
   },
   handler: handleGetEntityByKey,

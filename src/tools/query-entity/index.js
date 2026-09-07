@@ -12,37 +12,41 @@ module.exports = {
     inputSchema: {
       type: 'object',
       properties: {
+        service: {
+          type: 'string',
+          description: 'Service name to query. Use discover_services to list available services.',
+        },
         entity: {
           type: 'string',
           description: 'Entity set name to query (e.g. A_SalesOrder).',
         },
-        $filter: {
+        filter: {
           type: 'string',
-          description: 'OData $filter expression (e.g. "SalesOrderType eq \'OR\'").',
+          description: 'OData filter expression (e.g. "SalesOrderType eq \'OR\'").',
         },
-        $expand: {
+        expand: {
           type: 'string',
           description: 'Comma-separated navigation properties to expand (e.g. to_Item,to_Partner).',
         },
-        $select: {
+        select: {
           type: 'string',
           description:
             'Comma-separated list of properties to return (e.g. SalesOrder,SalesOrderType).',
         },
-        $top: {
+        top: {
           type: 'number',
           description: 'Maximum number of records to return.',
         },
-        $skip: {
+        skip: {
           type: 'number',
           description: 'Number of records to skip (for pagination).',
         },
-        $orderby: {
+        orderby: {
           type: 'string',
           description: 'Sort expression (e.g. CreationDate desc).',
         },
       },
-      required: ['entity'],
+      required: ['service', 'entity'],
     },
   },
   handler: handleQueryEntity,

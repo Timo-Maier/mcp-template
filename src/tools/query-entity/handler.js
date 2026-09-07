@@ -1,12 +1,16 @@
 'use strict';
 
 const { odataGet } = require('../../lib/odata');
-const { SERVICE_PATH } = require('../../constants');
+const { SERVICES } = require('../../constants');
 
 async function handleQueryEntity(args, userJwt) {
-  const { entity, filter, expand, select, top, skip, orderby } = args;
+  const { service: serviceName, entity, filter, expand, select, top, skip, orderby } = args;
+  const service = SERVICES[serviceName];
+  if (!service) {
+    throw new Error(`Unknown service '${serviceName}'. Use discover_services to list available services.`);
+  }
 
-  const path = `${SERVICE_PATH}/${entity}`;
+  const path = `${service.path}/${entity}`;
 
   const query = {};
   if (filter != null) query['$filter'] = filter;
@@ -16,7 +20,7 @@ async function handleQueryEntity(args, userJwt) {
   if (skip != null) query['$skip'] = String(skip);
   if (orderby != null) query['$orderby'] = orderby;
 
-  const data = await odataGet(path, userJwt, Object.keys(query).length ? query : undefined);
+  const data = await odataGet(service.destination, path, userJwt, Object.keys(query).length ? query : undefined);
 
   return JSON.stringify(data, null, 2);
 }

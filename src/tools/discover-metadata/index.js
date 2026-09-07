@@ -11,8 +11,13 @@ module.exports = {
       'Always call this first to understand the available entities before querying data.',
     inputSchema: {
       type: 'object',
-      properties: {},
-      required: [],
+      properties: {
+        service: {
+          type: 'string',
+          description: 'Service name to query. Use discover_services to list available services.',
+        },
+      },
+      required: ['service'],
     },
   },
   handler: handleDiscoverMetadata,

@@ -1,9 +1,8 @@
 'use strict';
 
 const { executeHttpRequest } = require('@sap-cloud-sdk/http-client');
-const { DESTINATION_NAME } = require('../constants');
 
-async function odataGet(path, userJwt, query, headers = { Accept: 'application/json' }) {
+async function odataGet(destination, path, userJwt, query, headers = { Accept: 'application/json' }) {
   let url = path;
   if (query && Object.keys(query).length) {
     // Build query string manually so that $filter single quotes are not percent-encoded,
@@ -15,7 +14,7 @@ async function odataGet(path, userJwt, query, headers = { Accept: 'application/j
   }
 
   const response = await executeHttpRequest(
-    { destinationName: DESTINATION_NAME, jwt: userJwt },
+    { destinationName: destination, jwt: userJwt },
     {
       method: 'GET',
       url,

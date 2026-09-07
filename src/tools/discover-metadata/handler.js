@@ -2,7 +2,7 @@
 
 const { XMLParser } = require('fast-xml-parser');
 const { odataGet } = require('../../lib/odata');
-const { SERVICE_PATH } = require('../../constants');
+const { SERVICES } = require('../../constants');
 
 const METADATA_TRUNCATE_LIMIT = 50_000;
 
@@ -76,9 +76,15 @@ function formatForLlm(entityTypes) {
 }
 
 async function handleDiscoverMetadata(args, userJwt) {
-  const metadataPath = `${SERVICE_PATH}/$metadata`;
+  const { service: serviceName } = args;
+  const service = SERVICES[serviceName];
+  if (!service) {
+    throw new Error(`Unknown service '${serviceName}'. Use discover_services to list available services.`);
+  }
 
-  const xml = await odataGet(metadataPath, userJwt, undefined, { Accept: 'application/xml' });
+  const metadataPath = `${service.path}/$metadata`;
+
+  const xml = await odataGet(service.destination, metadataPath, userJwt, undefined, { Accept: 'application/xml' });
   const entityTypes = parseMetadata(xml);
   let output = formatForLlm(entityTypes);
 

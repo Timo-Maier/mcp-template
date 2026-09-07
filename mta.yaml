@@ -22,6 +22,7 @@ modules:
     requires:
       - name: mcp-xsuaa
       - name: mcp-destination
+      - name: mcp-destination-connectivity
     provides:
       - name: mcp-server-template-app
         properties:
@@ -30,13 +31,13 @@ modules:
   - name: mcp-server-template-destination-content
     type: com.sap.application.content
     requires:
-      - name: mcp-server-template-destination
+      - name: mcp-destination
         parameters:
           content-target: true
-      - name: mcp-server-template-xsuaa
+      - name: mcp-xsuaa
         parameters:
           service-key:
-            name: mcp-server-template-xsuaa-key
+            name: mcp-xsuaa-key
       - name: mcp-server-template-app
     parameters:
       content:
@@ -46,8 +47,8 @@ modules:
               Description: MCP server — user token exchange destination for Warranty
               URL: ~{mcp-server-template-app/app-url}
               Authentication: OAuth2UserTokenExchange
-              TokenServiceInstanceName: mcp-server-template-xsuaa
-              TokenServiceKeyName: mcp-server-template-xsuaa-key
+              TokenServiceInstanceName: mcp-xsuaa
+              TokenServiceKeyName: mcp-xsuaa-key
               HTML5.DynamicDestination: true
           existing_destinations_policy: update
     build-parameters:
@@ -65,4 +66,12 @@ resources:
     type: org.cloudfoundry.managed-service
     parameters:
       service: destination
+      service-plan: lite
+
+
+
+  - name: mcp-destination-connectivity
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: connectivity
       service-plan: lite
