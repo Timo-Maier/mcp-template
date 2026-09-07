@@ -1,0 +1,8 @@
+{
+  "xsappname": "mcp-server-template",
+  "tenant-mode": "dedicated",
+  "description": "MCP server template — XSUAA app descriptor",
+  "oauth2-configuration": {
+    "token-validity": 43200
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "PORT": 4004,
+  "VCAP_SERVICES": {
+    "xsuaa": [
+      {
+        "credentials": {
+          "clientid": "...",
+          "clientsecret": "...",
+          "url": "...",
+          "xsappname": "..."
+        }
+      }
+    ],
+    "destination": [
+      {
+        "credentials": {
+          "clientid": "...",
+          "clientsecret": "...",
+          "uri": "...",
+          "url": "..."
+        }
+      }
+    ]
+  }
+}
